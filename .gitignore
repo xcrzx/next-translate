@@ -1,29 +1,9 @@
-*
-!.github
-!docs
-!docs/*
-!*.json
-!*.js
-!*.ts
-*.d.ts
-!*.tsx
-!src/plugin
-!examples
-!examples/**/*
-!src
-!__tests__
-!.babelrc
-!.prettierignore
-
 # dependencies
 /node_modules
-/examples/*/node_modules
-/examples/*/yarn.lock
 
 # next.js internal files
-out
+dist
 /.next/
-/examples/*/.next/
 
 # debug
 npm-debug.log*

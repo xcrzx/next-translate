@@ -1,5 +1,5 @@
 {
-  "name": "next-translate",
+  "name": "@xcrzx/next-translate",
   "version": "1.0.1",
   "description": "Tiny and powerful i18n tools (Next plugin + API) to translate your Next.js pages.",
   "license": "MIT",
@@ -26,27 +26,19 @@
     "name": "Aral Roca Gòmez",
     "email": "contact@aralroca.com"
   },
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "cross-env NODE_ENV=production && yarn tsc",
-    "example": "yarn example:complex",
-    "example:basic": "yarn build && cd examples/basic && yarn && yarn dev",
-    "example:complex": "yarn build && cd examples/complex && yarn && yarn dev",
-    "example:without-loader": "yarn build && cd examples/without-loader && yarn && yarn dev",
+    "build": "tsc",
     "format": "pretty-quick",
     "prepublish": "yarn test && yarn build",
-    "test": "cross-env NODE_ENV=test jest",
-    "test:coverage": "cross-env NODE_ENV=test jest --coverage",
-    "test:watch": "cross-env NODE_ENV=test jest --watch",
-    "tsc": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && node build-packages.js"
-  },
-  "bin": {
-    "next-translate": "./cli/builder.js"
+    "test": "NODE_ENV=test jest",
+    "test:coverage": "NODE_ENV=test jest --coverage",
+    "test:watch": "NODE_ENV=test jest --watch"
   },
   "devDependencies": {
     "@babel/cli": "7.12.10",
@@ -61,7 +53,6 @@
     "babel-jest": "26.6.3",
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
     "babel-preset-minify": "0.5.1",
-    "cross-env": "7.0.3",
     "express": "4.17.1",
     "husky": "4.3.6",
     "jest": "26.6.3",

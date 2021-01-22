@@ -87,7 +87,7 @@ export default function nextTranslate(nextConfig: any = {}) {
       config.module.rules.push({
         test,
         use: {
-          loader: 'next-translate/plugin/loader',
+          loader: '@xcrzx/next-translate/plugin/loader',
           options: {
             extensionsRgx: test,
             hasGetInitialPropsOnAppJs,
