@@ -20,11 +20,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vinissimus/next-translate.git"
+    "url": "https://github.com/xcrzx/next-translate.git"
   },
   "author": {
-    "name": "Aral Roca Gòmez",
-    "email": "contact@aralroca.com"
+    "name": "Dmitry Shevchenko"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
