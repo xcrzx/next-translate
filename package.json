@@ -30,24 +30,10 @@
   "module": "./lib/esm/index.js",
   "types": "./index.d.ts",
   "files": [
-    "cli",
-    "lib",
-    "plugin*",
-    "appWithI18n*",
-    "DynamicNamespaces*",
-    "I18nProvider*",
-    "getT*",
-    "loadNamespaces*",
-    "Trans*",
-    "withTranslation*",
-    "useTranslation*",
-    "index*"
+    "dist"
   ],
   "scripts": {
-    "build": "yarn clean && cross-env NODE_ENV=production && yarn tsc",
-    "clean": "yarn clean:build && yarn clean:examples",
-    "clean:build": "rm -rf lib plugin appWith* Dynamic* I18n* index _context loadNa* Trans useT* withT* getP* getC* *.d.ts getT transC* wrapT* types",
-    "clean:examples": "rm -rf examples/**/.next && rm -rf examples/**/node_modules && rm -rf examples/**/yarn.lock",
+    "build": "cross-env NODE_ENV=production && yarn tsc",
     "example": "yarn example:complex",
     "example:basic": "yarn build && cd examples/basic && yarn && yarn dev",
     "example:complex": "yarn build && cd examples/complex && yarn && yarn dev",
