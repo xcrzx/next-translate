@@ -1,6 +1,6 @@
 {
-  "name": "@xcrzx/next-translate",
-  "version": "2.0.0-alpha.1",
+  "name": "@portfolioslab/next-translate",
+  "version": "2.0.0-alpha.2",
   "description": "Tiny and powerful i18n tools (Next plugin + API) to translate your Next.js pages.",
   "license": "MIT",
   "keywords": [
@@ -25,17 +25,15 @@
   "author": {
     "name": "Dmitry Shevchenko"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "main": "./index.js",
+  "module": "./index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write .",
     "type-check": "tsc --pretty --noEmit",
-    "test": "jest"
+    "test": "jest",
+    "release": "yarn build && cp package.json dist && yarn publish dist"
   },
   "devDependencies": {
     "@babel/cli": "7.12.10",
