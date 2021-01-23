@@ -1,7 +1,7 @@
-import React from 'react'
-import I18nProvider from './I18nProvider'
-import loadNamespaces from './loadNamespaces'
-import { LoaderConfig } from '.'
+import React from "react"
+import I18nProvider from "./I18nProvider"
+import loadNamespaces from "./loadNamespaces"
+import { LoaderConfig } from "."
 
 type Props = {
   [key: string]: any
@@ -25,11 +25,11 @@ type NextComponentType<
 
 export default function appWithI18n(
   AppToTranslate: NextComponentType,
-  config: LoaderConfig = {}
+  config: LoaderConfig = {},
 ) {
   if (!config.isLoader && config.loader !== false) {
     console.warn(
-      '🚨 [next-translate] You can remove the "appWithI18n" HoC on the _app.js, unless you set "loader: false" in your i18n config file.'
+      '🚨 [next-translate] You can remove the "appWithI18n" HoC on the _app.js, unless you set "loader: false" in your i18n config file.',
     )
   }
 
@@ -48,7 +48,7 @@ export default function appWithI18n(
   }
 
   // @ts-ignore
-  if (typeof window === 'undefined') global.i18nConfig = config
+  if (typeof window === "undefined") global.i18nConfig = config
   // @ts-ignore
   else window.i18nConfig = config
 
@@ -67,7 +67,7 @@ export default function appWithI18n(
       ...(await loadNamespaces({
         ...ctx,
         ...config,
-        loaderName: 'getInitialProps',
+        loaderName: "getInitialProps",
       })),
     }
   }

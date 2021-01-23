@@ -1,13 +1,13 @@
-import templateWithLoader from '../src/plugin/templateWithLoader'
-import prettier from 'prettier'
+import templateWithLoader from "../src/plugin/templateWithLoader"
+import prettier from "prettier"
 
 function clean(code) {
-  return prettier.format(code, { parser: 'typescript' })
+  return prettier.format(code, { parser: "typescript" })
 }
 
 const tests = [
   {
-    describe: 'exporting as a function - with loader',
+    describe: "exporting as a function - with loader",
     code: `
       export default function Page() {
         return <div>Hello world</div>
@@ -23,14 +23,14 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: true,
       },
     ],
   },
   {
-    describe: 'exporting as a function - without loader',
+    describe: "exporting as a function - without loader",
     code: `
       export default function Page() {
         return <div>Hello world</div>
@@ -38,35 +38,35 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: false,
       },
       {
-        page: '/blog/[post]/[...catchall]',
-        loader: 'getServerSideProps',
+        page: "/blog/[post]/[...catchall]",
+        loader: "getServerSideProps",
         hasLoader: false,
       },
     ],
   },
   {
-    describe: 'exporting as a arrow function - without loader',
+    describe: "exporting as a arrow function - without loader",
     code: `export default () => <div>Hello world</div>`,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: false,
       },
       {
-        page: '/blog/[post]/[...catchall]',
-        loader: 'getServerSideProps',
+        page: "/blog/[post]/[...catchall]",
+        loader: "getServerSideProps",
         hasLoader: false,
       },
     ],
   },
   {
-    describe: 'exporting as a function in diferent line - with loader',
+    describe: "exporting as a function in diferent line - with loader",
     code: `
       function Page() {
         return <div>Hello world</div>
@@ -81,14 +81,14 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getServerSideProps',
+        page: "/index",
+        loader: "getServerSideProps",
         hasLoader: true,
       },
     ],
   },
   {
-    describe: 'exporting as a function in diferent line - without loader',
+    describe: "exporting as a function in diferent line - without loader",
     code: `
       function Page() {
         return <div>Hello world</div>
@@ -98,19 +98,19 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: false,
       },
       {
-        page: '/blog/[post]/[...catchall]',
-        loader: 'getServerSideProps',
+        page: "/blog/[post]/[...catchall]",
+        loader: "getServerSideProps",
         hasLoader: false,
       },
     ],
   },
   {
-    describe: 'exporting as a class - with loader',
+    describe: "exporting as a class - with loader",
     code: `
       import React from 'react'
 
@@ -126,14 +126,14 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: true,
       },
     ],
   },
   {
-    describe: 'exporting as a class in a diferent line - without loader',
+    describe: "exporting as a class in a diferent line - without loader",
     code: `
       import React from 'react'
 
@@ -149,19 +149,19 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: false,
       },
       {
-        page: '/blog/[post]/[...catchall]',
-        loader: 'getServerSideProps',
+        page: "/blog/[post]/[...catchall]",
+        loader: "getServerSideProps",
         hasLoader: false,
       },
     ],
   },
   {
-    describe: 'loader as a arrow function',
+    describe: "loader as a arrow function",
     code: `
       export default function Page() {
         return <div>Hello world</div>
@@ -172,14 +172,14 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: true,
       },
     ],
   },
   {
-    describe: 'loader imported to another place',
+    describe: "loader imported to another place",
     code: `
       import getStaticProps from 'somewhere/getStaticProps'
       import getStaticPaths from 'somewhere/getStaticPaths'
@@ -194,14 +194,14 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: true,
       },
     ],
   },
   {
-    describe: 'loader with named import to another place',
+    describe: "loader with named import to another place",
     code: `
       import { getStaticProps } from 'somewhere/getStaticProps'
       import { getStaticPaths } from 'somewhere/getStaticPaths'
@@ -216,14 +216,14 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: true,
       },
     ],
   },
   {
-    describe: 'loader with one named import to another place',
+    describe: "loader with one named import to another place",
     code: `
       import { getStaticPaths, getStaticProps, config } from 'somewhere/getStaticProps'
 
@@ -237,14 +237,14 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: true,
       },
     ],
   },
   {
-    describe: 'loader with named import to another place + rename',
+    describe: "loader with named import to another place + rename",
     code: `
       import { getStaticPropsA as getStaticProps } from 'somewhere/getStaticProps'
       import { getStaticProps as getStaticPaths } from 'somewhere/getStaticPaths'
@@ -259,8 +259,8 @@ const tests = [
   `,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: true,
       },
     ],
@@ -290,8 +290,8 @@ const tests = [
     const a = 'import { getStaticProps }'`,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: true,
       },
     ],
@@ -309,21 +309,21 @@ const tests = [
     export {something,AgetStaticProps as getStaticProps, getStaticPropsB}`,
     cases: [
       {
-        page: '/index',
-        loader: 'getStaticProps',
+        page: "/index",
+        loader: "getStaticProps",
         hasLoader: true,
       },
     ],
   },
 ]
 
-describe('templateWithLoader', () => {
+describe("templateWithLoader", () => {
   tests.forEach((d) => {
     describe(d.describe, () => {
       d.cases.forEach(({ expected, debug, ...options }) => {
         const fn = debug ? test.only : test
         const testname = Object.entries(options).map(([k, v]) => `${k}: ${v}`)
-        fn(testname.join(' | '), () => {
+        fn(testname.join(" | "), () => {
           expect(clean(templateWithLoader(d.code, options))).toMatchSnapshot()
         })
       })

@@ -1,13 +1,13 @@
-import templateWithHoc from '../src/plugin/templateWithHoc'
-import prettier from 'prettier'
+import templateWithHoc from "../src/plugin/templateWithHoc"
+import prettier from "prettier"
 
 function clean(code) {
-  return prettier.format(code, { parser: 'typescript' })
+  return prettier.format(code, { parser: "typescript" })
 }
 
 const tests = [
   {
-    describe: 'exporting a variable and with an existing HoC',
+    describe: "exporting a variable and with an existing HoC",
     code: `
     import withWrapper from 'somewhere'
 
@@ -23,7 +23,7 @@ const tests = [
     cases: [{ skipInitialProps: false }, { skipInitialProps: true }],
   },
   {
-    describe: 'exporting a class with a getInitialProps static outside',
+    describe: "exporting a class with a getInitialProps static outside",
     code: `
     import React from 'react';
 
@@ -39,7 +39,7 @@ const tests = [
   },
   {
     describe:
-      'exporting a class with a getInitialProps static outside + one commented before',
+      "exporting a class with a getInitialProps static outside + one commented before",
     code: `
     import React from 'react';
     
@@ -65,7 +65,7 @@ const tests = [
     cases: [{ skipInitialProps: false }, { skipInitialProps: true }],
   },
   {
-    describe: 'exporting a class with a getInitialProps static',
+    describe: "exporting a class with a getInitialProps static",
     code: `
     import React from 'react';
 
@@ -83,7 +83,7 @@ const tests = [
   },
   {
     describe:
-      'exporting a class with a getInitialProps static | exporting apart',
+      "exporting a class with a getInitialProps static | exporting apart",
     code: `
     import React from 'react';
 
@@ -102,7 +102,7 @@ const tests = [
     cases: [{ skipInitialProps: false }, { skipInitialProps: true }],
   },
   {
-    describe: 'exporting a arrow function with Hoc',
+    describe: "exporting a arrow function with Hoc",
     code: `
     import someHoc from 'whatever'
 
@@ -113,7 +113,7 @@ const tests = [
     cases: [{ skipInitialProps: false }, { skipInitialProps: true }],
   },
   {
-    describe: 'exporting a arrow function with getInitialProps',
+    describe: "exporting a arrow function with getInitialProps",
     code: `
     const Page = () => <div>Hello world</div>
 
@@ -152,13 +152,13 @@ const tests = [
   },
 ]
 
-describe('templateWithHoc', () => {
+describe("templateWithHoc", () => {
   tests.forEach((d) => {
     describe(d.describe, () => {
       d.cases.forEach(({ expected, debug, ...options }) => {
         const fn = debug ? test.only : test
         const testname = Object.entries(options).map(([k, v]) => `${k}: ${v}`)
-        fn(testname.join(' | '), () => {
+        fn(testname.join(" | "), () => {
           expect(clean(templateWithHoc(d.code, options))).toMatchSnapshot()
         })
       })

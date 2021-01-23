@@ -1,7 +1,7 @@
-import React from 'react'
-import { render, cleanup } from '@testing-library/react'
-import I18nProvider from '../src/I18nProvider'
-import useTranslation from '../src/useTranslation'
+import React from "react"
+import { render, cleanup } from "@testing-library/react"
+import I18nProvider from "../src/I18nProvider"
+import useTranslation from "../src/useTranslation"
 
 const Inner = ({ i18nKey, query }) => {
   const { t } = useTranslation()
@@ -16,14 +16,14 @@ const TestEnglish = ({ i18nKey, query, namespaces }) => {
   )
 }
 
-describe('useTranslation', () => {
+describe("useTranslation", () => {
   afterEach(cleanup)
   beforeAll(() => {
     console.warn = jest.fn()
   })
 
-  describe('fallbacks', () => {
-    test('should return an empty string if t(undefined)', () => {
+  describe("fallbacks", () => {
+    test("should return an empty string if t(undefined)", () => {
       const Inner = () => {
         const { t } = useTranslation()
         const test = t(undefined)
@@ -34,52 +34,20 @@ describe('useTranslation', () => {
         )
       }
 
-      const expected = ' | string'
+      const expected = " | string"
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{}}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toBe(expected)
     })
 
-    test('should return the key as fallback using wrong the nested translations', () => {
-      const i18nKey = 'ns:grandfather.parent'
-      const expected = 'ns:grandfather.parent'
-      const nested = {
-        grandfather: {
-          parent: {
-            child: 'I am the child',
-          },
-        },
-      }
-      const { container } = render(
-        <TestEnglish namespaces={{ ns: nested }} i18nKey={i18nKey} />
-      )
-      expect(container.textContent).toContain(expected)
-    })
-
-    test('should return the key as fallback using wrong the very nested translations', () => {
-      const i18nKey = 'ns:grandfather.parent.this.is.very.nested.example'
-      const expected = 'ns:grandfather.parent.this.is.very.nested.example'
-      const nested = {
-        grandfather: {
-          parent: {
-            child: 'I am the child',
-          },
-        },
-      }
-      const { container } = render(
-        <TestEnglish namespaces={{ ns: nested }} i18nKey={i18nKey} />
-      )
-      expect(container.textContent).toContain(expected)
-    })
-
-    test('should return the key as fallback WITH PROVIDER', () => {
+    test("should return the key as fallback WITH PROVIDER", () => {
       const Inner = () => {
         const { t } = useTranslation()
-        const test = t('ns:template-string')
+        const test = t("ns:template-string")
         return (
           <>
             {test} | {typeof test}
@@ -87,20 +55,20 @@ describe('useTranslation', () => {
         )
       }
 
-      const expected = 'ns:template-string | string'
+      const expected = "ns:template-string | string"
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{}}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toBe(expected)
     })
 
-    test('should return the key as fallback WITHOUT PROVIDER', () => {
+    test("should return the key as fallback WITHOUT PROVIDER", () => {
       const Inner = () => {
         const { t } = useTranslation()
-        const test = t('ns:template-string')
+        const test = t("ns:template-string")
         return (
           <>
             {test} | {typeof test}
@@ -108,13 +76,13 @@ describe('useTranslation', () => {
         )
       }
 
-      const expected = 'ns:template-string | string'
+      const expected = "ns:template-string | string"
 
       const { container } = render(<Inner />)
       expect(container.textContent).toBe(expected)
     })
 
-    test('should return the key as fallback using a template string WITH PROVIDER', () => {
+    test("should return the key as fallback using a template string WITH PROVIDER", () => {
       const Inner = () => {
         const { t } = useTranslation()
         const test = t`ns:template-string`
@@ -125,19 +93,19 @@ describe('useTranslation', () => {
         )
       }
 
-      const expected = 'ns:template-string | string'
+      const expected = "ns:template-string | string"
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{}}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toBe(expected)
     })
 
-    test('should work with a defined default namespace | t as template string', () => {
+    test("should work with a defined default namespace | t as template string", () => {
       const Inner = () => {
-        const { t } = useTranslation('a')
+        const { t } = useTranslation("a")
         return (
           <>
             {t`test`} {t`b:test`}
@@ -146,46 +114,46 @@ describe('useTranslation', () => {
       }
 
       const ns = {
-        a: { test: 'Test from A' },
-        b: { test: 'Test from B' },
+        a: { test: "Test from A" },
+        b: { test: "Test from B" },
       }
 
-      const expected = 'Test from A Test from B'
+      const expected = "Test from A Test from B"
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={ns}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toBe(expected)
     })
 
-    test('should work with a defined default namespace | t as function', () => {
+    test("should work with a defined default namespace | t as function", () => {
       const Inner = () => {
-        const { t } = useTranslation('a')
+        const { t } = useTranslation("a")
         return (
           <>
-            {t('test')} {t('b:test')}
+            {t("test")} {t("b:test")}
           </>
         )
       }
 
       const ns = {
-        a: { test: 'Test from A' },
-        b: { test: 'Test from B' },
+        a: { test: "Test from A" },
+        b: { test: "Test from B" },
       }
 
-      const expected = 'Test from A Test from B'
+      const expected = "Test from A Test from B"
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={ns}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toBe(expected)
     })
 
-    test('should return the key as fallback using a template string WITHOUT PROVIDER', () => {
+    test("should return the key as fallback using a template string WITHOUT PROVIDER", () => {
       const Inner = () => {
         const { t } = useTranslation()
         const test = t`ns:template-string`
@@ -196,578 +164,361 @@ describe('useTranslation', () => {
         )
       }
 
-      const expected = 'ns:template-string | string'
+      const expected = "ns:template-string | string"
 
       const { container } = render(<Inner />)
       expect(container.textContent).toBe(expected)
     })
   })
 
-  describe('nested', () => {
-    test('should work with nested keys', () => {
-      const i18nKey = 'ns:grandfather.parent.child'
-      const expected = 'I am the child'
-      const nested = {
-        grandfather: {
-          parent: {
-            child: expected,
-          },
-        },
-      }
-      const { container } = render(
-        <TestEnglish namespaces={{ ns: nested }} i18nKey={i18nKey} />
-      )
-      expect(container.textContent).toContain(expected)
-    })
-
-    test('should work with nested keys + plural', () => {
-      const i18nKey = 'ns:grandfather.parent.child'
-      const expected = 'Plural! 2'
-      const nested = {
-        grandfather: {
-          parent: {
-            child: 'Singular {{count}}',
-            child_other: 'Plural! {{count}}',
-          },
-        },
-      }
-      const { container } = render(
-        <TestEnglish
-          namespaces={{ ns: nested }}
-          i18nKey={i18nKey}
-          query={{ count: 2 }}
-        />
-      )
-      expect(container.textContent).toContain(expected)
-    })
-
-    test('should work with nested keys + count=1', () => {
-      const i18nKey = 'ns:grandfather.parent.child'
-      const expected = 'One! 1'
-      const nested = {
-        grandfather: {
-          parent: {
-            child: 'Singular {{count}}',
-            child_1: 'One! {{count}}',
-          },
-        },
-      }
-      const { container } = render(
-        <TestEnglish
-          namespaces={{ ns: nested }}
-          i18nKey={i18nKey}
-          query={{ count: 1 }}
-        />
-      )
-      expect(container.textContent).toContain(expected)
-    })
-  })
-
-  describe('plurals', () => {
-    test('should work with singular | count=1', () => {
-      const i18nKey = 'ns:withsingular'
-      const expected = 'The number is NOT ZERO'
+  describe("plurals", () => {
+    test("should work with singular | count=1", () => {
+      const i18nKey = "ns:withsingular"
+      const expected = "The number is NOT ZERO"
       const withSingular = {
-        withsingular: 'The number is NOT ZERO',
-        withsingular_0: 'The number is ZERO!',
-        withsingular_other: 'Oops!',
+        withsingular: "The number is NOT ZERO",
+        withsingular_0: "The number is ZERO!",
+        withsingular_other: "Oops!",
       }
       const { container } = render(
         <TestEnglish
           namespaces={{ ns: withSingular }}
           i18nKey={i18nKey}
           query={{ count: 1 }}
-        />
+        />,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work with singular | count=0', () => {
-      const i18nKey = 'ns:withsingular'
-      const expected = 'The number is NOT ONE'
+    test("should work with singular | count=0", () => {
+      const i18nKey = "ns:withsingular"
+      const expected = "The number is NOT ONE"
       const withSingular = {
-        withsingular: 'The number is NOT ONE',
-        withsingular_1: 'The number is ONE!',
-        withsingular_other: 'Oops!',
+        withsingular: "The number is NOT ONE",
+        withsingular_1: "The number is ONE!",
+        withsingular_other: "Oops!",
       }
       const { container } = render(
         <TestEnglish
           namespaces={{ ns: withSingular }}
           i18nKey={i18nKey}
           query={{ count: 0 }}
-        />
+        />,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work with _1 | count=1', () => {
-      const i18nKey = 'ns:withsingular'
-      const expected = 'The number is ONE!'
+    test("should work with _1 | count=1", () => {
+      const i18nKey = "ns:withsingular"
+      const expected = "The number is ONE!"
       const with_1 = {
-        withsingular: 'The number is NOT ONE',
-        withsingular_1: 'The number is ONE!',
-        withsingular_other: 'Oops!',
+        withsingular: "The number is NOT ONE",
+        withsingular_1: "The number is ONE!",
+        withsingular_other: "Oops!",
       }
       const { container } = render(
         <TestEnglish
           namespaces={{ ns: with_1 }}
           i18nKey={i18nKey}
           query={{ count: 1 }}
-        />
+        />,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work with _0 | count=0', () => {
-      const i18nKey = 'ns:withsingular'
-      const expected = 'The number is ZERO!'
+    test("should work with _0 | count=0", () => {
+      const i18nKey = "ns:withsingular"
+      const expected = "The number is ZERO!"
       const with_0 = {
-        withsingular: 'The number is NOT ZERO',
-        withsingular_0: 'The number is ZERO!',
-        withsingular_other: 'Oops!',
+        withsingular: "The number is NOT ZERO",
+        withsingular_0: "The number is ZERO!",
+        withsingular_other: "Oops!",
       }
       const { container } = render(
         <TestEnglish
           namespaces={{ ns: with_0 }}
           i18nKey={i18nKey}
           query={{ count: 0 }}
-        />
+        />,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work with plural | count=2', () => {
-      const i18nKey = 'ns:withplural'
-      const expected = 'Number is bigger than one!'
+    test("should work with plural | count=2", () => {
+      const i18nKey = "ns:withplural"
+      const expected = "Number is bigger than one!"
       const withPlural = {
-        withplural: 'Singular',
-        withplural_1: 'The number is ONE!',
-        withplural_other: 'Number is bigger than one!',
+        withplural: "Singular",
+        withplural_1: "The number is ONE!",
+        withplural_other: "Number is bigger than one!",
       }
       const { container } = render(
         <TestEnglish
           namespaces={{ ns: withPlural }}
           i18nKey={i18nKey}
           query={{ count: 2 }}
-        />
+        />,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work with _2 | count=2', () => {
-      const i18nKey = 'ns:withplural'
-      const expected = 'The number is TWO!'
+    test("should work with _2 | count=2", () => {
+      const i18nKey = "ns:withplural"
+      const expected = "The number is TWO!"
       const withPlural = {
-        withplural: 'Singular',
-        withplural_2: 'The number is TWO!',
-        withplural_other: 'Number is bigger than one!',
+        withplural: "Singular",
+        withplural_2: "The number is TWO!",
+        withplural_other: "Number is bigger than one!",
       }
       const { container } = render(
         <TestEnglish
           namespaces={{ ns: withPlural }}
           i18nKey={i18nKey}
           query={{ count: 2 }}
-        />
+        />,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work as a template string', () => {
+    test("should work as a template string", () => {
       const Inner = () => {
         const { t } = useTranslation()
         return t`ns:template-string`
       }
 
-      const expected = 'Example with template string'
+      const expected = "Example with template string"
       const templateString = {
-        'template-string': 'Example with template string',
+        "template-string": "Example with template string",
       }
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{ ns: templateString }}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })
-
-    describe('nested', () => {
-      test('should work with 0 | count=0', () => {
-        const i18nKey = 'ns:withzero'
-        const expected = 'The number is ZERO!'
-        const with_0 = {
-          withzero: {
-            one: 'The number is NOT ZERO',
-            other: 'The number is not ZERO!',
-            0: 'The number is ZERO!',
-          },
-        }
-        const { container } = render(
-          <TestEnglish
-            namespaces={{ ns: with_0 }}
-            i18nKey={i18nKey}
-            query={{ count: 0 }}
-          />
-        )
-        expect(container.textContent).toContain(expected)
-      })
-
-      test('should work with zero | count=0', () => {
-        const i18nKey = 'ns:withzero'
-        const expected = 'The number is ZERO!'
-        const with_0 = {
-          withzero: {
-            one: 'The number is NOT ZERO',
-            other: 'The number is ZERO!',
-          },
-        }
-        const { container } = render(
-          <TestEnglish
-            namespaces={{ ns: with_0 }}
-            i18nKey={i18nKey}
-            query={{ count: 0 }}
-          />
-        )
-        expect(container.textContent).toContain(expected)
-      })
-
-      test('should work with singular | count=1', () => {
-        const i18nKey = 'ns:withsingular'
-        const expected = 'The number is NOT ZERO'
-        const withSingular = {
-          withsingular: {
-            one: 'The number is NOT ZERO',
-            other: 'Oops!',
-          },
-        }
-        const { container } = render(
-          <TestEnglish
-            namespaces={{ ns: withSingular }}
-            i18nKey={i18nKey}
-            query={{ count: 1 }}
-          />
-        )
-        expect(container.textContent).toContain(expected)
-      })
-
-      test('should work with 1 | count=1', () => {
-        const i18nKey = 'ns:withsingular'
-        const expected = 'The number is NOT ZERO'
-        const withSingular = {
-          withsingular: {
-            1: 'The number is NOT ZERO',
-            other: 'Oops!',
-          },
-        }
-        const { container } = render(
-          <TestEnglish
-            namespaces={{ ns: withSingular }}
-            i18nKey={i18nKey}
-            query={{ count: 1 }}
-          />
-        )
-        expect(container.textContent).toContain(expected)
-      })
-
-      test('should work with plural | count=2', () => {
-        const i18nKey = 'ns:withplural'
-        const expected = 'Number is bigger than one!'
-        const withPlural = {
-          withplural: {
-            one: 'Singular',
-            other: 'Number is bigger than one!',
-          },
-        }
-        const { container } = render(
-          <TestEnglish
-            namespaces={{ ns: withPlural }}
-            i18nKey={i18nKey}
-            query={{ count: 2 }}
-          />
-        )
-        expect(container.textContent).toContain(expected)
-      })
-
-      test('should work with 2 | count=2', () => {
-        const i18nKey = 'ns:withplural'
-        const expected = 'Number is 2!'
-        const withPlural = {
-          withplural: {
-            one: 'Singular',
-            2: 'Number is 2!',
-            other: 'Number is bigger than one!',
-          },
-        }
-        const { container } = render(
-          <TestEnglish
-            namespaces={{ ns: withPlural }}
-            i18nKey={i18nKey}
-            query={{ count: 2 }}
-          />
-        )
-        expect(container.textContent).toContain(expected)
-      })
-    })
   })
 
-  describe('options', () => {
-    test('should work with returnObjects option and Array locale', () => {
+  describe("options", () => {
+    test("should work with returnObjects option and Array locale", () => {
       const Inner = () => {
         const { t } = useTranslation()
-        const items = t('ns:template-array', {}, { returnObjects: true })
+        const items = t("ns:template-array", {}, { returnObjects: true })
         return <>{items.map((i) => `${i.title} `)}</>
       }
 
-      const expected = 'Title 1 Title 2 Title 3'
+      const expected = "Title 1 Title 2 Title 3"
       const templateString = {
-        'template-array': [
-          { title: 'Title 1' },
-          { title: 'Title 2' },
-          { title: 'Title 3' },
+        "template-array": [
+          { title: "Title 1" },
+          { title: "Title 2" },
+          { title: "Title 3" },
         ],
       }
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{ ns: templateString }}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work with returnObjects option and Object locale', () => {
+    test("should work with returnObjects option and Object locale", () => {
       const Inner = () => {
         const { t } = useTranslation()
         const { title, description } = t(
-          'ns:template-object',
+          "ns:template-object",
           {},
-          { returnObjects: true }
+          { returnObjects: true },
         )
         return <>{`${title} ${description}`}</>
       }
 
-      const expected = 'Title 1 Description 1'
+      const expected = "Title 1 Description 1"
       const templateString = {
-        'template-object': {
-          title: 'Title 1',
-          description: 'Description 1',
+        "template-object": {
+          title: "Title 1",
+          description: "Description 1",
         },
       }
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{ ns: templateString }}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })
-    test('should work with returnObjects option and Object locale with interpolation', () => {
+    test("should work with returnObjects option and Object locale with interpolation", () => {
       const Inner = () => {
         const { t } = useTranslation()
         const { title, description } = t(
-          'ns:template-object-interpolation',
-          { count: 2, something: 'of title' },
-          { returnObjects: true }
+          "ns:template-object-interpolation",
+          { count: 2, something: "of title" },
+          { returnObjects: true },
         )
         return <>{`${title} ${description}`}</>
       }
 
-      const expected = 'Title 2 Description of title'
+      const expected = "Title 2 Description of title"
       const templateString = {
-        'template-object-interpolation': {
-          title: 'Title {{count}}',
-          description: 'Description {{something}}',
+        "template-object-interpolation": {
+          title: "Title {{count}}",
+          description: "Description {{something}}",
         },
       }
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{ ns: templateString }}>
           <Inner />
-        </I18nProvider>
-      )
-      expect(container.textContent).toContain(expected)
-    })
-    test('should work with returnObjects option and Object locale with interpolation and highly nested object', () => {
-      const Inner = () => {
-        const { t } = useTranslation()
-        const {
-          title,
-          description,
-          template: {
-            parent: { child },
-          },
-        } = t(
-          'ns:template-object-interpolation',
-          { count: 2, something: 'of title', childTitle: '4' },
-          { returnObjects: true }
-        )
-        return <>{`${title} ${description} ${child.title}`}</>
-      }
-
-      const expected = 'Title 2 Description of title Child title 4'
-      const templateString = {
-        'template-object-interpolation': {
-          title: 'Title {{count}}',
-          description: 'Description {{something}}',
-          template: {
-            parent: {
-              child: {
-                title: 'Child title {{childTitle}}',
-              },
-            },
-          },
-        },
-      }
-
-      const { container } = render(
-        <I18nProvider lang="en" namespaces={{ ns: templateString }}>
-          <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work fallback as string', () => {
+    test("should work fallback as string", () => {
       const Inner = () => {
         const { t } = useTranslation()
-        const description = t('ns:description2', {}, { fallback: 'ns:title' })
+        const description = t("ns:description2", {}, { fallback: "ns:title" })
         return <>{description}</>
       }
 
-      const expected = 'Title 1'
+      const expected = "Title 1"
       const ns = {
-        title: 'Title 1',
-        description: 'Description 1',
+        title: "Title 1",
+        description: "Description 1",
       }
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{ ns }}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work fallback as array of strings', () => {
+    test("should work fallback as array of strings", () => {
       const Inner = () => {
         const { t } = useTranslation()
         const description = t(
-          'ns:description2',
+          "ns:description2",
           {},
-          { fallback: ['ns:noexistent', 'ns:title'] }
+          { fallback: ["ns:noexistent", "ns:title"] },
         )
         return <>{description}</>
       }
 
-      const expected = 'Title 1'
+      const expected = "Title 1"
       const ns = {
-        title: 'Title 1',
-        description: 'Description 1',
+        title: "Title 1",
+        description: "Description 1",
       }
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{ ns }}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should ignore fallback if is not an array of string or string | array of objects', () => {
+    test("should ignore fallback if is not an array of string or string | array of objects", () => {
       const Inner = () => {
         const { t } = useTranslation()
         const description = t(
-          'ns:description2',
+          "ns:description2",
           {},
-          { fallback: [{}, 'ns:title'] }
+          { fallback: [{}, "ns:title"] },
         )
         return <>{description}</>
       }
 
-      const expected = 'ns:description2'
+      const expected = "ns:description2"
       const ns = {
-        title: 'Title 1',
-        description: 'Description 1',
+        title: "Title 1",
+        description: "Description 1",
       }
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{ ns }}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should ignore fallback if is not an array of string or string | object', () => {
+    test("should ignore fallback if is not an array of string or string | object", () => {
       const Inner = () => {
         const { t } = useTranslation()
-        const description = t('ns:description2', {}, { fallback: {} })
+        const description = t("ns:description2", {}, { fallback: {} })
         return <>{description}</>
       }
 
-      const expected = 'ns:description2'
+      const expected = "ns:description2"
       const ns = {
-        title: 'Title 1',
-        description: 'Description 1',
+        title: "Title 1",
+        description: "Description 1",
       }
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{ ns }}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should work fallback with returnObjects option and Object locale with interpolation', () => {
+    test("should work fallback with returnObjects option and Object locale with interpolation", () => {
       const Inner = () => {
         const { t } = useTranslation()
         const { title, description } = t(
-          'ns:noexistent',
-          { count: 2, something: 'of title' },
+          "ns:noexistent",
+          { count: 2, something: "of title" },
           {
             returnObjects: true,
-            fallback: ['ns:blabla', 'ns:template-object-interpolation'],
-          }
+            fallback: ["ns:blabla", "ns:template-object-interpolation"],
+          },
         )
         return <>{`${title} ${description}`}</>
       }
 
-      const expected = 'Title 2 Description of title'
+      const expected = "Title 2 Description of title"
       const templateString = {
-        'template-object-interpolation': {
-          title: 'Title {{count}}',
-          description: 'Description {{something}}',
+        "template-object-interpolation": {
+          title: "Title {{count}}",
+          description: "Description {{something}}",
         },
       }
 
       const { container } = render(
         <I18nProvider lang="en" namespaces={{ ns: templateString }}>
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })
 
-    test('should support alternative interpolation delimeter options', () => {
+    test("should support alternative interpolation delimeter options", () => {
       const Inner = () => {
         const { t } = useTranslation()
-        const text = t('ns:template-object-interpolation', {
+        const text = t("ns:template-object-interpolation", {
           count: 3,
-          something: 'cats',
+          something: "cats",
         })
         return <>{text}</>
       }
 
-      const expected = 'There are 3 cats.'
+      const expected = "There are 3 cats."
       const templateString = {
-        'template-object-interpolation': 'There are ${count} ${something}.',
+        "template-object-interpolation": "There are ${count} ${something}.",
       }
 
       const config = {
         interpolation: {
-          prefix: '${',
-          suffix: '}',
+          prefix: "${",
+          suffix: "}",
         },
       }
 
@@ -778,7 +529,7 @@ describe('useTranslation', () => {
           config={config}
         >
           <Inner />
-        </I18nProvider>
+        </I18nProvider>,
       )
       expect(container.textContent).toContain(expected)
     })

@@ -1,9 +1,9 @@
-import { I18nConfig, LoggerProps, TranslationQuery } from '.'
+import { I18nConfig, LoggerProps, TranslationQuery } from "."
 
 export default function transCore({ config, allNamespaces, pluralRules }) {
   const { logger = missingKeyLogger } = config
 
-  function t(key = '', query, options) {
+  function t(key = "", query, options) {
     const k = Array.isArray(key) ? key[0] : key
     const [namespace, i18nKey] = k.split(/:(.+)/)
     const dic = allNamespaces[namespace] || {}
@@ -11,23 +11,23 @@ export default function transCore({ config, allNamespaces, pluralRules }) {
     const value = getDicValue(dic, keyWithPlural, options)
 
     const empty =
-      typeof value === 'undefined' ||
-      (typeof value === 'object' && !Object.keys(value).length)
+      typeof value === "undefined" ||
+      (typeof value === "object" && !Object.keys(value).length)
 
     const fallbacks =
-      typeof options?.fallback === 'string'
+      typeof options?.fallback === "string"
         ? [options.fallback]
         : options?.fallback || []
 
     // Log only during CSR
-    if (typeof window !== 'undefined' && empty) {
+    if (typeof window !== "undefined" && empty) {
       logger({ namespace, i18nKey })
     }
 
     // Fallbacks
     if (empty && Array.isArray(fallbacks) && fallbacks.length) {
       const [firstFallback, ...restFallbacks] = fallbacks
-      if (typeof firstFallback === 'string') {
+      if (typeof firstFallback === "string") {
         return t(firstFallback, query, { ...options, fallback: restFallbacks })
       }
     }
@@ -51,23 +51,15 @@ export default function transCore({ config, allNamespaces, pluralRules }) {
  */
 function getDicValue(
   dic: Object,
-  key: string = '',
+  key: string = "",
   options: { returnObjects?: boolean; fallback?: string | string[] } = {
     returnObjects: false,
-  }
+  },
 ): string | undefined | unknown {
-  const value: string | unknown = key
-    .split('.')
-    .reduce((val: Object, key: string) => {
-      if (typeof val === 'string') {
-        return {}
-      }
-
-      return val[key as keyof typeof val] || {}
-    }, dic)
+  const value: string | unknown = dic[key]
 
   if (
-    typeof value === 'string' ||
+    typeof value === "string" ||
     ((value as unknown) instanceof Object && options.returnObjects)
   ) {
     return value
@@ -81,9 +73,9 @@ function plural(
   pluralRules,
   dic: Object,
   key: string,
-  query?: TranslationQuery | null
+  query?: TranslationQuery | null,
 ): string {
-  if (!query || typeof query.count !== 'number') return key
+  if (!query || typeof query.count !== "number") return key
 
   const numKey = `${key}_${query.count}`
   if (getDicValue(dic, numKey) !== undefined) return numKey
@@ -114,18 +106,18 @@ function interpolation({
   query?: TranslationQuery | null
   config: I18nConfig
 }): string {
-  if (!text || !query) return text || ''
+  if (!text || !query) return text || ""
 
   const escapeRegex = (str: string) =>
-    str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+    str.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&")
   const {
-    interpolation: { prefix, suffix } = { prefix: '{{', suffix: '}}' },
+    interpolation: { prefix, suffix } = { prefix: "{{", suffix: "}}" },
   } = config
 
   return Object.keys(query).reduce((all, varKey) => {
     const regex = new RegExp(
       `${escapeRegex(prefix)}\\s*${varKey}\\s*${escapeRegex(suffix)}`,
-      'gm'
+      "gm",
     )
     all = all.replace(regex, `${query[varKey]}`)
     return all
@@ -150,7 +142,7 @@ function objectInterpolation({
         query,
         config,
       })
-    if (typeof obj[key] === 'string')
+    if (typeof obj[key] === "string")
       obj[key] = interpolation({ text: obj[key] as string, query, config })
   })
 
@@ -158,16 +150,16 @@ function objectInterpolation({
 }
 
 function missingKeyLogger({ namespace, i18nKey }: LoggerProps): void {
-  if (process.env.NODE_ENV === 'production') return
+  if (process.env.NODE_ENV === "production") return
 
   // This means that instead of "ns:value", "value" has been misspelled (without namespace)
   if (!i18nKey) {
     console.warn(
-      `[next-translate] The text "${namespace}" has no namespace in front of it.`
+      `[next-translate] The text "${namespace}" has no namespace in front of it.`,
     )
     return
   }
   console.warn(
-    `[next-translate] "${namespace}:${i18nKey}" is missing in current namespace configuration. Try adding "${i18nKey}" to the namespace "${namespace}".`
+    `[next-translate] "${namespace}:${i18nKey}" is missing in current namespace configuration. Try adding "${i18nKey}" to the namespace "${namespace}".`,
   )
 }

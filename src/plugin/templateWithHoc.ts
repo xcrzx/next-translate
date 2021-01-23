@@ -1,16 +1,16 @@
-import { clearCommentsRgx, overwriteLoadLocales } from './utils'
+import { clearCommentsRgx, overwriteLoadLocales } from "./utils"
 
 export default function templateWithHoc(
   code,
   {
     skipInitialProps = false,
     typescript = false,
-    pageName = '__Page_Next_Translate__',
+    pageName = "__Page_Next_Translate__",
     hasLoadLocaleFrom = false,
-  } = {}
+  } = {},
 ) {
   const tokenToReplace = `__CODE_TOKEN_${Date.now().toString(16)}__`
-  const codeWithoutComments = code.replace(clearCommentsRgx, '')
+  const codeWithoutComments = code.replace(clearCommentsRgx, "")
 
   // Replacing all the possible "export default" (if there are comments
   // can be possible to have more than one)
@@ -20,13 +20,13 @@ export default function templateWithHoc(
   // to ours, this way we avoid issues.
   const [, , componentName] =
     codeWithoutComments.match(
-      /export +default +(function|class) +([A-Z]\w*)/
+      /export +default +(function|class) +([A-Z]\w*)/,
     ) || []
 
   if (componentName) {
     modifiedCode = modifiedCode.replace(
-      new RegExp(`\\W${componentName}\\.getInitialProps`, 'g'),
-      `${pageName}.getInitialProps`
+      new RegExp(`\\W${componentName}\\.getInitialProps`, "g"),
+      `${pageName}.getInitialProps`,
     )
   }
 
@@ -42,7 +42,7 @@ export default function templateWithHoc(
     });
   `
 
-  if (typescript) template = template.replace(/\n/g, '\n// @ts-ignore\n')
+  if (typescript) template = template.replace(/\n/g, "\n// @ts-ignore\n")
 
   return template.replace(tokenToReplace, `\n${modifiedCode}\n`)
 }

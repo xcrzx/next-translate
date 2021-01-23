@@ -26,7 +26,6 @@
     "name": "Dmitry Shevchenko"
   },
   "main": "./index.js",
-  "module": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
     "build": "tsc",

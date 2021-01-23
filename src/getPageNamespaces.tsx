@@ -1,4 +1,4 @@
-import { I18nConfig, PageValue } from '.'
+import { I18nConfig, PageValue } from "."
 
 // @todo Replace to [].flat() in the future
 function flat(a: string[][]): string[] {
@@ -14,17 +14,17 @@ function flat(a: string[][]): string[] {
 export default async function getPageNamespaces(
   { pages = {} }: I18nConfig,
   page: string,
-  ctx: object
+  ctx: object,
 ): Promise<string[]> {
-  const rgx = 'rgx:'
+  const rgx = "rgx:"
   const getNs = async (ns: PageValue): Promise<string[]> =>
-    typeof ns === 'function' ? ns(ctx) : ns || []
+    typeof ns === "function" ? ns(ctx) : ns || []
 
   // Namespaces promises using regex
   const rgxs = Object.keys(pages).reduce((arr, p) => {
     if (
       p.substring(0, rgx.length) === rgx &&
-      new RegExp(p.replace(rgx, '')).test(page)
+      new RegExp(p.replace(rgx, "")).test(page)
     ) {
       arr.push(getNs(pages[p]))
     }
@@ -32,7 +32,7 @@ export default async function getPageNamespaces(
   }, [] as Promise<string[]>[])
 
   return [
-    ...(await getNs(pages['*'])),
+    ...(await getNs(pages["*"])),
     ...(await getNs(pages[page])),
     ...flat(await Promise.all(rgxs)),
   ]

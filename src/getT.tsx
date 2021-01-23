@@ -1,8 +1,8 @@
-import getConfig from './getConfig'
-import transCore from './transCore'
-import wrapTWithDefaultNs from './wrapTWithDefaultNs'
+import getConfig from "./getConfig"
+import transCore from "./transCore"
+import wrapTWithDefaultNs from "./wrapTWithDefaultNs"
 
-export default async function getT(locale = '', namespace = '') {
+export default async function getT(locale = "", namespace = "") {
   const config = getConfig()
   const defaultLoader = async (l, n) => Promise.resolve({})
   const lang = locale || config.defaultLocale

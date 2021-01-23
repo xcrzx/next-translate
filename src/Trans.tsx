@@ -4,30 +4,30 @@ import React, {
   Fragment,
   ReactElement,
   ReactNode,
-} from 'react'
-import { TransProps } from '.'
-import useTranslation from './useTranslation'
+} from "react"
+import { TransProps } from "."
+import useTranslation from "./useTranslation"
 
 const tagRe = /<(\w+)>(.*?)<\/\1>|<(\w+)\/>/
 const nlRe = /(?:\r\n|\r|\n)/g
 
 function getElements(
-  parts: Array<string | undefined>
+  parts: Array<string | undefined>,
 ): Array<string | undefined>[] {
   if (!parts.length) return []
 
   const [paired, children, unpaired, after] = parts.slice(0, 4)
 
   return [
-    [(paired || unpaired) as string, children || ('' as string), after],
+    [(paired || unpaired) as string, children || ("" as string), after],
   ].concat(getElements(parts.slice(4, parts.length)))
 }
 
 function formatElements(
   value: string,
-  elements: ReactElement[] = []
+  elements: ReactElement[] = [],
 ): string | ReactNode[] {
-  const parts = value.replace(nlRe, '').split(tagRe)
+  const parts = value.replace(nlRe, "").split(tagRe)
 
   if (parts.length === 1) return value
 
@@ -48,8 +48,8 @@ function formatElements(
         // unpaired tags might have children if it's a component passed as a variable
         children
           ? formatElements(children as string, elements)
-          : element.props.children
-      )
+          : element.props.children,
+      ),
     )
 
     if (after) tree.push(after)

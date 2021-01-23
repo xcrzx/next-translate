@@ -1,6 +1,6 @@
-import { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode } from "react"
 
-import nextTranslate from './plugin'
+import nextTranslate from "./plugin"
 
 export interface TranslationQuery {
   [name: string]: string | number
@@ -10,11 +10,11 @@ export interface Translate {
   <T = string>(
     i18nKey: string | TemplateStringsArray,
     query: TranslationQuery | null | undefined,
-    options: { returnObjects?: boolean; fallback?: string | string[] }
+    options: { returnObjects?: boolean; fallback?: string | string[] },
   ): T
   (
     i18nKey: string | TemplateStringsArray,
-    query: TranslationQuery | null | undefined
+    query: TranslationQuery | null | undefined,
   ): string
   (i18nKey: string | TemplateStringsArray): string
 }
@@ -45,7 +45,7 @@ export interface I18nConfig {
   locales?: string[]
   loadLocaleFrom?: (
     language: string,
-    namespace: string
+    namespace: string,
   ) => Promise<I18nDictionary>
   pages?: Record<string, PageValue>
   logger?: I18nLogger

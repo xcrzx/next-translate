@@ -1,49 +1,49 @@
-import { LoaderConfig } from '.'
-import getConfig from './getConfig'
-import getPageNamespaces from './getPageNamespaces'
+import { LoaderConfig } from "."
+import getConfig from "./getConfig"
+import getPageNamespaces from "./getPageNamespaces"
 
 export default async function loadNamespaces(config: LoaderConfig = {}) {
   const conf = { ...getConfig(), ...config }
   const __lang: string =
-    conf.locale || conf.router?.locale || conf.defaultLocale || ''
+    conf.locale || conf.router?.locale || conf.defaultLocale || ""
 
   if (!conf.pathname) {
     console.warn(
-      '🚨 [next-translate] You forgot to pass the "pathname" inside "loadNamespaces" configuration'
+      '🚨 [next-translate] You forgot to pass the "pathname" inside "loadNamespaces" configuration',
     )
     return { __lang }
   }
 
   if (!conf.loaderName && conf.loader !== false) {
     console.warn(
-      '🚨 [next-translate] You can remove the "loadNamespaces" helper, unless you set "loader: false" in your i18n config file.'
+      '🚨 [next-translate] You can remove the "loadNamespaces" helper, unless you set "loader: false" in your i18n config file.',
     )
   }
 
-  const page = removeTrailingSlash(conf.pathname.replace(/\/index$/, '')) || '/'
+  const page = removeTrailingSlash(conf.pathname.replace(/\/index$/, "")) || "/"
   const namespaces = await getPageNamespaces(conf, page, conf)
   const defaultLoader = (l, n) => Promise.resolve({})
   const pageNamespaces =
     (await Promise.all(
       namespaces.map((ns) =>
-        typeof conf.loadLocaleFrom === 'function'
+        typeof conf.loadLocaleFrom === "function"
           ? conf.loadLocaleFrom(__lang, ns)
-          : defaultLoader(__lang, ns)
-      )
+          : defaultLoader(__lang, ns),
+      ),
     ).catch(() => {})) || []
 
-  if (conf.logBuild !== false && typeof window === 'undefined') {
+  if (conf.logBuild !== false && typeof window === "undefined") {
     const color = (c) => `\x1b[36m${c}\x1b[0m`
     console.log(
-      color('next-translate'),
+      color("next-translate"),
       `- compiled page:`,
       color(page),
-      '- locale:',
+      "- locale:",
       color(__lang),
-      '- namespaces:',
-      color(namespaces.join(', ')),
-      '- used loader:',
-      color(conf.loaderName || '-')
+      "- namespaces:",
+      color(namespaces.join(", ")),
+      "- used loader:",
+      color(conf.loaderName || "-"),
     )
   }
 
@@ -56,6 +56,6 @@ export default async function loadNamespaces(config: LoaderConfig = {}) {
   }
 }
 
-function removeTrailingSlash(path = '') {
-  return path.length > 1 && path.endsWith('/') ? path.slice(0, -1) : path
+function removeTrailingSlash(path = "") {
+  return path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path
 }

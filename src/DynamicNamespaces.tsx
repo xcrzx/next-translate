@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { DynamicNamespacesProps, I18nDictionary, I18nConfig } from '.'
-import I18nProvider, { InternalContext } from './I18nProvider'
-import useTranslation from './useTranslation'
+import React, { useContext, useEffect, useState } from "react"
+import { DynamicNamespacesProps, I18nDictionary, I18nConfig } from "."
+import I18nProvider, { InternalContext } from "./I18nProvider"
+import useTranslation from "./useTranslation"
 
 export default function DynamicNamespaces({
   dynamic,
@@ -17,10 +17,10 @@ export default function DynamicNamespaces({
     dynamic || config.loadLocaleFrom || (() => Promise.resolve({}))
 
   async function loadNamespaces() {
-    if (typeof loadLocale !== 'function') return
+    if (typeof loadLocale !== "function") return
 
     const pageNamespaces = await Promise.all(
-      namespaces.map((ns) => loadLocale(lang, ns))
+      namespaces.map((ns) => loadLocale(lang, ns)),
     )
     setPageNs(pageNamespaces)
     setLoaded(true)

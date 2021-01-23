@@ -1,9 +1,9 @@
-import React, { createContext, useContext } from 'react'
-import { useRouter } from 'next/router'
-import I18nContext from './_context'
-import transCore from './transCore'
-import useTranslation from './useTranslation'
-import { I18n, I18nProviderProps } from '.'
+import React, { createContext, useContext } from "react"
+import { useRouter } from "next/router"
+import I18nContext from "./_context"
+import transCore from "./transCore"
+import useTranslation from "./useTranslation"
+import { I18n, I18nProviderProps } from "."
 
 export const InternalContext = createContext({ ns: {}, config: {} })
 
@@ -15,7 +15,7 @@ export default function I18nProvider({
 }: I18nProviderProps) {
   const { lang: parentLang } = useTranslation()
   const { locale, defaultLocale } = useRouter() || {}
-  const lang = lng || parentLang || locale || defaultLocale || ''
+  const lang = lng || parentLang || locale || defaultLocale || ""
   const internal = useContext(InternalContext)
   const allNamespaces = { ...internal.ns, ...namespaces } as Record<
     string,
