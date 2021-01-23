@@ -32,7 +32,7 @@ export default function templateWithHoc(
 
   let template = `
     import __i18nConfig from '@next-translate-root/i18n'
-    import __appWithI18n from 'next-translate/appWithI18n'
+    import __appWithI18n from '@portfolioslab/next-translate/appWithI18n'
     ${tokenToReplace}
     export default __appWithI18n(__Page_Next_Translate__, {
       ...__i18nConfig,

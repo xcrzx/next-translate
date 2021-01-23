@@ -32,7 +32,7 @@
     "format": "prettier --write .",
     "type-check": "tsc --pretty --noEmit",
     "test": "jest",
-    "release": "yarn build && cp package.json dist && yarn publish dist"
+    "release": "rm -rf dist && yarn build && cp package.json dist && yarn publish dist"
   },
   "devDependencies": {
     "@babel/cli": "7.12.10",

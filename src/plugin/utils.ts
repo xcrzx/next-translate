@@ -8,7 +8,7 @@ export const defaultLoader =
 export function getDefaultAppJs(hasLoadLocaleFrom) {
   return `
   import i18nConfig from '@next-translate-root/i18n'
-  import appWithI18n from 'next-translate/appWithI18n'
+  import appWithI18n from '@portfolioslab/next-translate/appWithI18n'
 
   function MyApp({ Component, pageProps }) {
     return <Component {...pageProps} />
@@ -49,9 +49,6 @@ export function isPageToIgnore(page) {
 
 export function hasHOC(rawData) {
   const hocRgx = new RegExp("[^\\(|\\| )]+\\([A-Z][^\\(|\\| )]*\\)")
-  const hasWithTranslationHOC = new RegExp(
-    "import *(\\w*) *.*from *.*next-translate\\/withTranslation.*",
-  )
 
   if (!rawData.includes("export default")) return false
   if (
@@ -62,14 +59,7 @@ export function hasHOC(rawData) {
     return false
   }
 
-  const [, withTranslationName] = rawData.match(hasWithTranslationHOC) || []
   const data = rawData
-    // Remove withTranslation hoc, in this case we can ensure that is not using
-    // a getInitialProps on the Page.
-    // Ex: "export default withTranslation(somevariable)" -> export default somevariable
-    .replace(new RegExp(`${withTranslationName}\\(.*\\)`), (d) =>
-      d.replace(new RegExp(`(${withTranslationName}|\\(|\\))`, "g"), ""),
-    )
     // Clear all comments
     .replace(clearCommentsRgx, "")
 

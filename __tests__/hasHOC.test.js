@@ -18,23 +18,6 @@ describe("hasHOC", () => {
       `),
       ).toBe(true)
     })
-    test("with -> with withTranslation + another hoc", () => {
-      expect(
-        hasHOC(`
-        import withTranslation from 'next-translate/withTranslation'
-        import withWrapper from 'somewhere'
-
-        function Page() {
-          return <div>Hello world</div>
-        }
-
-        const anothervariable = withWrapper(Page);
-        const somevariable = anothervariable;
-        
-        export default withTranslation(somevariable)
-      `),
-      ).toBe(true)
-    })
     test("with -> export default withWrapper(Page)", () => {
       expect(
         hasHOC(`
@@ -132,42 +115,7 @@ describe("hasHOC", () => {
       `),
       ).toBe(false)
     })
-    test("with -> with withTranslation", () => {
-      expect(
-        hasHOC(`
-        import useTranslation from 'next-translate/useTranslation'
-        import withTranslation from 'next-translate/withTranslation'
 
-        const withHOC = (C) => (p) => <C {...p} />
-
-        // Just for tests
-        function PageWithHOC() {
-          const { t } = useTranslation()
-          return <div>{t\`common:title\`}</div>
-        }
-
-        export default withTranslation(PageWithHOC)
-      `),
-      ).toBe(false)
-    })
-    test("with -> with renamed withTranslation", () => {
-      expect(
-        hasHOC(`
-        import useTranslation from 'next-translate/useTranslation'
-        import justI18nHoc from 'next-translate/withTranslation'
-
-        const withHOC = (C) => (p) => <C {...p} />
-
-        // Just for tests
-        function PageWithHOC() {
-          const { t } = useTranslation()
-          return <div>{t\`common:title\`}</div>
-        }
-
-        export default justI18nHoc(PageWithHOC)
-      `),
-      ).toBe(false)
-    })
     test("with -> it has getStaticProps", () => {
       expect(
         hasHOC(`

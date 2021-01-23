@@ -32,7 +32,6 @@
 - [3. Configuration](#3-configuration)
 - [4. API](#4-api)
   - [useTranslation](#usetranslation)
-  - [withTranslation](#withtranslation)
   - [Trans Component](#trans-component)
   - [DynamicNamespaces](#dynamicnamespaces)
   - [getT](#gett)
@@ -274,32 +273,6 @@ The `t` function:
     - **fallback**: string | string[] - fallback if i18nKey doesn't exist. [See more](#8-fallbacks).
     - **returnObjects**: boolean - Get part of the JSON with all the translations. [See more](#7-nested-translations).
 - **Output**: string
-
-### withTranslation
-
-**Size**: ~560b 📦
-
-It's an alternative to `useTranslation` hook, but in a HOC for these components that are no-functional. _(Not recommended, it's better to use the `useTranslation` hook.)_.
-
-The `withTranslation` HOC returns a Component with an extra prop named `i18n` (Object { t: Function, lang: string }).
-
-Example:
-
-```jsx
-import React from 'react'
-import withTranslation from 'next-translate/withTranslation'
-
-class Description extends React.Component {
-  render() {
-    const { t, lang } = this.props.i18n
-    const description = t('common:description')
-
-    return <p>{description}</p>
-  }
-}
-
-export default withTranslation(NoFunctionalComponent)
-```
 
 ### Trans Component
 
